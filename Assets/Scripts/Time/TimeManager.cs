@@ -21,27 +21,25 @@ public class TimeManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
-    }
 
-    private void Start()
-    {
         _timerList = new List<Timer>();
         _timerToPool = new Queue<Timer>();
         _timerPool = new Queue<Timer>();
     }
 
-    public Timer StartTimer(float time, UnityAction callback)
+    public Timer StartTimer(float duration, UnityAction callback)
     {
         Timer timer;
         if (_timerPool.Count > 0)
         {
             timer = _timerPool.Dequeue();
-            timer.Initialise(time, callback);
+            timer.SetTimer(duration, callback);
         }
         else
         {
-            timer = new Timer(time, callback);
+            timer = new Timer(duration, callback);
         }
 
         _timerList.Add(timer);
